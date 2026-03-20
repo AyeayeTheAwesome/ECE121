@@ -58,6 +58,7 @@ int main(void){
         //int invlist = [1, 3, 7, 15, 31, 63, 127, 255];
         //int currlist = [];
         int counter = 0;
+        int timecounter = 0;
         LATEINV = 255; //init leds properly
         while(1) {
             but1 = (PORTFbits.RF1 == 0);
@@ -77,10 +78,13 @@ int main(void){
                     but4 = (PORTDbits.RD7 == 0);
                 }
             } else {
-            LATEINV = 128*(counter % 128 == 0) + 64*(counter % 64 == 0) + 32*(counter % 32 == 0) + 16*(counter % 16 == 0)
-                    + 8*(counter % 8 == 0) + 4*(counter % 4 == 0) + 2*(counter % 2 == 0) + 1*(counter % 1 == 0);
-            NOP_delay_ms(250); //slow down count speed here
-            counter++;
+                if (timecounter % 50 == 0) {
+                    LATEINV = 128*(counter % 128 == 0) + 64*(counter % 64 == 0) + 32*(counter % 32 == 0) + 16*(counter % 16 == 0)
+                            + 8*(counter % 8 == 0) + 4*(counter % 4 == 0) + 2*(counter % 2 == 0) + 1*(counter % 1 == 0);
+                    counter++;
+                }
+                NOP_delay_ms(5); //slow down count speed here
+                timecounter++;
             }
         }
     // inv = 1, 3, 1, 7, 1, 3, 1, 15, 1, 3, 1, 7, 1
